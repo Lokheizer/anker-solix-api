@@ -138,6 +138,23 @@ async def poll_sites(  # noqa: C901
                 api._update_account(
                     {"products": await api.get_products(fromFile=fromFile)}
                 )
+            # Add any missing site device to cache
+            for dev in [
+                d
+                for d in siteInfo.get("site_device_list") or []
+                if (sn := d.get("device_sn")) and sn not in api._site_devices
+            ]:
+                api._update_dev(
+                    {
+                        "device_sn": sn,
+                        "device_pn": dev.get("device_model"),
+                        "alias": dev.get("device_name"),
+                        "status": dev.get("status"),
+                    },
+                    siteId=myid,
+                    isAdmin=admin,
+                )
+                api._site_devices.add(sn)
             # Routines for hes site type to get site statistic object (no values in scene info response)
             if (site_Type := mysite.get("site_type")) == SolixDeviceType.HES.value:
                 # initialize the HES Api if not done yet and link the account cache

@@ -592,10 +592,10 @@ class AnkerSolixApiMonitor:
                     )
                     if (
                         (sb := site.get("solarbank_info") or {})
-                        and len(sb.get("solarbank_list", [])) > 0
+                        and len(sb.get("solarbank_list") or []) > 0
                     ) or (
                         (sb := site.get("solarbank_pps_info") or {})
-                        and len(sb.get("pps_list", [])) > 0
+                        and len(sb.get("pps_list") or []) > 0
                     ):
                         # print solarbank or solarbank_pps totals
                         soc = f"{int(float(sb.get('total_battery_power') or 0) * (1 if site.get('site_type') == SolixDeviceType.SOLARBANK_PPS.value else 100))!s:>4} %"
@@ -857,6 +857,7 @@ class AnkerSolixApiMonitor:
             elif devtype in [
                 SolixDeviceType.SOLARBANK.value,
                 SolixDeviceType.SOLARBANK_PPS.value,
+                SolixDeviceType.HOME_BACKUP.value,
             ]:
                 unit = dev.get("power_unit", "W")
                 CONSOLE.info(
@@ -894,11 +895,11 @@ class AnkerSolixApiMonitor:
                         f"{'Min SoC / Temp':<{col3}}: {m2 and (c or cm)}{m2 or (dev.get('power_cutoff') or dev.get('output_cutoff_data') or '--')!s:>4} %{co} "
                         f"/ {m4 and (c or cm)}{m4}{co}"
                     )
-                energy = f"{dev.get('battery_energy', '----'):>4} Wh"
+                energy = f"{dev.get('battery_energy', '----'):>5} Wh"
                 if "battery_capacity" in dev:
                     CONSOLE.info(
                         f"{'Battery Energy':<{col1}}: {cc}{energy:<{col2}}{co} "
-                        f"{'Capacity':<{col3}}: {cc}{customized.get('battery_capacity') or dev.get('battery_capacity', '----')!s:>4} Wh{co}"
+                        f"{'Capacity':<{col3}}: {cc}{customized.get('battery_capacity') or dev.get('battery_capacity', '----')!s:>5} Wh{co}"
                     )
                 unit = dev.get("power_unit", "W")
                 if (
@@ -1902,8 +1903,8 @@ class AnkerSolixApiMonitor:
                     f"{'EV Year':<{col3}}: {(ev.productive_year or '----')!s}"
                 )
                 CONSOLE.info(
-                    f"{'Charge Limit':<{col1}}: {(round(ev.ac_max_charging_power, 1) if ev.ac_max_charging_power else '--.-')!s:>4} {'kWh':<{col2 - 5}} "
-                    f"{'Capacity':<{col3}}: {(round(ev.battery_capacity, 1) if ev.battery_capacity else '--.-')!s:>4} kW"
+                    f"{'Charge Limit':<{col1}}: {(round(ev.ac_max_charging_power, 1) if ev.ac_max_charging_power else '--.-')!s:>4} {'kW':<{col2 - 5}} "
+                    f"{'Capacity':<{col3}}: {(round(ev.battery_capacity, 1) if ev.battery_capacity else '--.-')!s:>5} kWh"
                 )
                 CONSOLE.info(
                     f"{'Is Charging':<{col1}}: {('YES' if vehicle.get('is_smart_charging') else 'NO'):<{col2}} "
