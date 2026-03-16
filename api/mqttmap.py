@@ -3172,7 +3172,7 @@ SOLIXMQTTMAP: Final[dict] = {
             "a3": {NAME: "battery_soc"},
             "a4": {
                 NAME: "charging_status"
-            },  # charge_status: 0=idle, 1=discharging, 2=charging
+            },  # 0=idle, 1=discharging, 2=charging
             "a5": {NAME: "temperature", SIGNED: True},
             "a6": {NAME: "battery_soc?"},
             "a7": {NAME: "sw_version?", "values": 4},
@@ -3187,17 +3187,28 @@ SOLIXMQTTMAP: Final[dict] = {
             "b2": {NAME: "consumed_energy?"},
             "b3": {NAME: "discharged_energy?"},
             "b4": {NAME: "pv_yield?"},
-            "b8": {NAME: "usage_mode?"},
+            "b8": {NAME: "usage_mode?"},  # 2=self-consume, 4=manual-backup, 5=time-of-use, 8=backup/emergency
             "bf": {NAME: "unknown_timestamp_0405_bf?"},
             "c0": {NAME: "unknown_timestamp_0405_c0?"},
             "c3": {
                 NAME: "use_time_band?"
-            },  # use_time_band: 1=peak, 2=mid-peak, 3=off-peak, 4=super-off-peak
+            },  # 1=peak, 2=mid-peak, 3=off-peak, 4=super-off-peak (2,4 not yet observed)
             "c4": {NAME: "grid_power"},  # signed?
             "c5": {NAME: "home_demand"},
             "c6": {NAME: "pv_1_power?"},
             "c7": {NAME: "pv_2_power?"},
+            "af": {NAME: "ac_input_power?"},  # generator/AC input power to home
+            "ba": {
+                BYTES: {
+                    "02": [
+                        {NAME: "storm_guard_switch", MASK: 0x01},  # 0=off, 1=on
+                    ],
+                }
+            },
+            "c2": {NAME: "total_ac_input_power?"},  # total generator output W
             "cb": {NAME: "expansion_packs?"},  # number of expansion batteries
+            "d5": {NAME: "generator_to_battery_power?"},  # generator charging battery W
+            "dc": {NAME: "backup_mode_status?"},  # 0=grid-connected, 2=off-grid/backup
             "fe": {NAME: "msg_timestamp"},
         },
         "0408": {
