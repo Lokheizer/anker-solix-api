@@ -1306,6 +1306,9 @@ async def get_energy_offset(
         offsetData["energy_offset_tz"] = 1800 * round(
             round(offsetData["energy_offset_seconds"]) / 1800
         )
+        # Add total statistics to data
+        if stats := data.get("statistics"):
+            offsetData["statistics"] = stats
     return offsetData
 
 

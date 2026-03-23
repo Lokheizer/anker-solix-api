@@ -2692,7 +2692,7 @@ _EV_CHARGER_0405 = {
     "d8": {NAME: "solar_evcharge_switch"},  # Off (0), On (1)
     "d9": {NAME: "solar_evcharge_mode"},  # solar & grid (0), solar only (1)
     "da": {NAME: "solar_evcharge_min_current"},  # 6 - rated_current (32 A), step 1 A
-    "db": {NAME: "phase_operating_mode"},  # 1 phase (1), 3 phase (3) ???
+    "db": {NAME: "phase_operating_mode"},  # auto (0), 1 phase (1)
     "dc": {NAME: "solar_evcharge_monitoring_mode"},
     "dd": {
         NAME: "auto_phase_switch"
@@ -2731,7 +2731,7 @@ _EV_CHARGER_0410 = {
     "aa": {NAME: "charging_energy", "factor": 0.001},
     "ac": {
         NAME: "charging_mode?"
-    },  # off/paused (0) / grid_charge (1) ? / unplugged (7)
+    },  # off/paused (0) / grid_charge (1) ? / solar_charge (7)
     "ab": {NAME: "charging_start_timestamp"},
     "ad": {NAME: "plug_countdown_seconds"},
     "ae": {NAME: "start_countdown_seconds"},
@@ -2749,7 +2749,7 @@ _EV_CHARGER_0410 = {
     },  # disconnected (0), Connecting (1), Connected (2)
     # "b9": {NAME: "cp_signal_status?"},
     # A=12V(0), B1=9V(3), B2=9V(4), C1=6V(5), C2=6V(6), Error(7), D1=3V(8), D2=3V(9),  E=0V(10), F=-12(11),
-    "ba": {NAME: "phase_operating_mode"},  # 1 phase (1), 3 phase (3) ?
+    "ba": {NAME: "phase_operating_mode"},  # auto (0), 1 phase (1)
     "bb": {NAME: "ev_charger_status"},
     # Standby(0), Preparing(1), Charging(2), Charger_Paused(3), Vehicle_Paused(4), Completed (5), Reserving(6), Disabled(7), Error(8)
 }

@@ -1542,11 +1542,12 @@ class AnkerSolixApiMonitor:
                     )
                 m1 = cm and mqtt.get("random_delay_switch", "")
                 m2 = cm and mqtt.get("auto_phase_switch", "")
+                m4 = str(cm and mqtt.get("installed_phases", ""))
                 if str(m1) or str(m2):
                     CONSOLE.info(
                         f"{'Rand. Delay Sw.':<{col1}}: {str(m1) and (c or cm)}{get_enum_name(SolixSwitchMode, m1, str(m1) or '---').upper():>3} "
                         f"{'':<{col2 - 4}}{co} "
-                        f"{'Auto Phase Sw.':<{col3}}: {str(m2) and (c or cm)}{get_enum_name(SolixSwitchMode, m2, str(m2) or '---').upper():>3}{co}"
+                        f"{'Auto Phase Sw.':<{col3}}: {str(m2) and (c or cm)}{get_enum_name(SolixSwitchMode, m2, str(m2) or '---').upper():>3} (Phases: {m4 or '-'}){co}"
                     )
                 m1 = cm and mqtt.get("load_balance_switch", "")
                 m2 = cm and str(mqtt.get("main_breaker_limit", ""))
@@ -2818,6 +2819,7 @@ class AnkerSolixApiMonitor:
                                     )
                                 )
                                 for d in self.api.devices.values()
+                                if (not self.site_selected or d.get('site_id') == self.site_selected)
                             ]
                         # Ask if output should be filtered to certain device
                         if (

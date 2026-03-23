@@ -830,6 +830,13 @@ class AnkerSolixBaseApi:
                             and value is not None
                         ):
                             device_mqtt[key] = value
+                            # determine EV charger model 3 phase capability
+                            if key == "charging_duration_seconds":
+                                device_mqtt["installed_phases"] = (
+                                    int(values.get("voltage_l1", 0) > 0)
+                                    + int(values.get("voltage_l2", 0) > 0)
+                                    + int(values.get("voltage_l3", 0) > 0)
+                                )
                             value_updated = bool(
                                 key not in ["topics", "expansion_packs"]
                                 and "timestamp" not in key

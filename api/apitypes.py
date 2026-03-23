@@ -1521,9 +1521,9 @@ class SolixChargerPortStatus(StrEnum):
 class SolixPhaseMode(StrEnum):
     """Str Enumeration for Anker Solix Phase operation mode."""
 
-    auto_switch = "0"
+    automatic = "0"
     one_phase = "1"
-    three_phase = "2"
+    # three_phase = "2"
     unknown = "unknown"
 
 

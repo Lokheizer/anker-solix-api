@@ -712,15 +712,14 @@ async def poll_sites(  # noqa: C901
                                 "grid_to_home_power": str(round(max(0, ct_power))),
                             },
                         )
-                    # Check and update energy offset if not excluded
+                    # Get total stats and update energy offset
                     if not (
                         {
                             SolixDeviceType.SOLARBANK_PPS.value,
-                            ApiCategories.solarbank_pps_energy,
                         }
                         & exclude
                     ):
-                        # Add energy offset info to site cache
+                        # Add energy offset and valid total statistics info to site cache
                         mysite.update(
                             await api.get_energy_offset(siteId=myid, fromFile=fromFile)
                         )
